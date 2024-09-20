@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Binaries to ESP32</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/esptool-js/0.3.1/esptool.min.js"></script>
+</head>
+<body>
+    <h1>Flash ESP32</h1>
+    <button id="connectButton">Connect to ESP32</button>
+    <button id="flashButton" disabled>Flash ESP32</button>
+    <div id="status"></div>
+
+    <script>
+        let espTool;
+        const connectButton = document.getElementById('connectButton');
+        const flashButton = document.getElementById('flashButton');
+        const statusDiv = document.getElementById('status');
+
+        connectButton.addEventListener('click', async () => {
+            try {
+                espTool = new ESPTool();
+                await espTool.connect();
+                statusDiv.textContent = 'Connected to ESP32';
+                flashButton.disabled = false;
+            } catch (error) {
+                statusDiv.textContent = `Error: ${error.message}`;
+            }
+        });
+
+        flashButton.addEventListener('click', async () => {
+            try {
+                statusDiv.textContent = 'Flashing ESP32...';
+                const response = await fetch('/flash', { method: 'POST' });
+                const result = await response.text();
+                statusDiv.textContent = result;
+            } catch (error) {
+                statusDiv.textContent = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>

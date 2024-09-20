@@ -1,0 +1,13 @@
+{
+    "name": "detecondas",
+    "version": "1.0.0",
+    "description": "ESP32 flashing tool",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "esptool-js": "^0.3.2",
+        "express": "^4.18.2"
+    }
+}
